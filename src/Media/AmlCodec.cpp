@@ -406,39 +406,9 @@ void AmlCodec::SetCurrentPts(double value)
 		throw InvalidOperationException("The codec is not open.");
 	}
 
-	//vcka unsigned int pts = value * PTS_FREQ;
-
-	//int codecCall = codec_set_pcrscr(&codec, (int)pts);
-	//if (codecCall != 0)
-	//{
-	//	printf("codec_set_pcrscr failed.\n");
-	//}
-
 	// truncate to 32bit
 	unsigned long pts = (unsigned long)(value * PTS_FREQ);
 	pts &= 0xffffffff;
-//	unsigned long pts = (unsigned long)(value * 1000000);
-//	pts &= 0xffffffff;
-	//unsigned int pcrscr;
-	//am_ioctl_parm parm = { 0 };
-	
-	//parm.cmd = AMSTREAM_SET_PCRSCR;
-	//parm.data_32 = (unsigned int)(pts);
-//vcka
-	//parm.data_64 = (unsigned long)(value * PTS_FREQ);
-
-	//int ret = ioctl(handle, AMSTREAM_IOC_SET, (unsigned long)&parm);
-	//if (ret < 0) 
-	//{
-	//	codecMutex.Unlock();
-	//	throw Exception("AMSTREAM_SET_PCRSCR failed.");
-	//}
-	//else
-	//{
-		//printf("AmlCodec::SetCurrentPts - parm.data_32=%u\n", parm.data_32);
-	//}
-
-	//parm.data_64 = (unsigned long)(value * PTS_FREQ);
 
 	int ret = ioctl(handle, AMSTREAM_IOC_SET_PCRSCR, (unsigned long)pts); //pts
 	if (ret < 0) 
